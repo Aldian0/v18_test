@@ -78,7 +78,7 @@
     <field name="arch" type="xml">
             <list>
                 <!-- Add your fields here -->
-                <field name="name"/>
+                <!-- <field name="name"/> -->
                 <field name="fragile_total"/>
                 <field name="priority_total"/>
                 <field name="grand_total"/>
@@ -94,7 +94,7 @@
             <sheet>
                 <group>
                     <group string="Shipment Selection">
-                        <field name="name"/>
+                        <!-- <field name="name"/> -->
                         <field name="fragile_id"/>
                         <field name="priority_id"/>
                     </group>

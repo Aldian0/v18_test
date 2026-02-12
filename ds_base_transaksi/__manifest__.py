@@ -24,6 +24,7 @@ Long description of module's purpose
     'data': [
         'security/groups.xml',
         'security/ir.model.access.csv',
+        'data/sequence.xml',
         'views/menu.xml',
         'views/loyalty.xml',
         'views/pengiriman.xml',

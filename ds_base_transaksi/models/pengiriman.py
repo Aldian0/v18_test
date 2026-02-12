@@ -1,9 +1,7 @@
 from odoo import models, fields, api
 from odoo.exceptions import UserError
 
-# =================================
 # 1. BASE CLASS
-# =================================
 class ShipmentBase(models.Model):
     _name = 'shipment.base'
     _description = 'Shipment Base'
@@ -15,10 +13,8 @@ class ShipmentBase(models.Model):
         return self.distance_km * 5000
 
 
-# =================================
 # 2. STANDARD SHIPMENT
-# =================================
-# Perhatikan: Mewarisi ShipmentBase (Class Python), bukan models.Model
+# Mewarisi ShipmentBase (Class Python), bukan models.Model
 class StandardShipment(ShipmentBase): 
     _name = 'shipment.standard'
     _inherit = 'shipment.base'
@@ -32,10 +28,8 @@ class StandardShipment(ShipmentBase):
         return base_cost + self.handling_fee
 
 
-# =================================
 # 3. FRAGILE GOODS SHIPMENT
-# =================================
-# Perhatikan: Mewarisi StandardShipment (Class Python)
+# Mewarisi StandardShipment (Class Python)
 class FragileGoodsShipment(StandardShipment):
     _name = 'shipment.fragile'
     _inherit = 'shipment.standard'
@@ -45,6 +39,14 @@ class FragileGoodsShipment(StandardShipment):
     name = fields.Char(string='No. Pengiriman', required=True, copy=False, default='New')
     insurance_cost = fields.Float(string='Insurance (10%)', compute='_compute_cost')
     total_cost = fields.Float(string='Total Cost', compute='_compute_cost')
+
+    @api.model
+    def create(self, vals):
+        if vals.get('name', 'New') == 'New':
+            vals['name'] = self.env['ir.sequence'].next_by_code(
+                'shipment.fragile'
+            ) or 'New'
+        return super().create(vals)
 
     def calculate_total_cost(self):
         # Override: Panggil method dari parent (StandardShipment)
@@ -59,10 +61,8 @@ class FragileGoodsShipment(StandardShipment):
             rec.insurance_cost = rec.total_cost - (rec.calculate_base_cost() + 20000)
 
 
-# =================================
 # 4. PRIORITY SHIPMENT
-# =================================
-# Perhatikan: Mewarisi StandardShipment (Class Python)
+# Mewarisi StandardShipment (Class Python)
 class PriorityShipment(StandardShipment):
     _name = 'shipment.priority'
     _inherit = 'shipment.standard'
@@ -72,6 +72,14 @@ class PriorityShipment(StandardShipment):
     name = fields.Char(string='No. Pengiriman', required=True, copy=False, default='New')
     priority_fee = fields.Integer(string='Priority Fee', default=50000, readonly=True)
     total_cost = fields.Float(string='Total Cost', compute='_compute_cost')
+
+    @api.model
+    def create(self, vals):
+        if vals.get('name', 'New') == 'New':
+            vals['name'] = self.env['ir.sequence'].next_by_code(
+                'shipment.priority'
+            ) or 'New'
+        return super().create(vals)
 
     def calculate_total_cost(self):
         # Override: Panggil method dari parent (StandardShipment)
@@ -83,15 +91,13 @@ class PriorityShipment(StandardShipment):
             rec.total_cost = rec.calculate_total_cost()
 
 
-# ==========================================
 # 5. TEST GRAND TOTAL (REAL RECORD VERSION)
-# ==========================================
 class ShipmentGrandTotal(models.Model):
     _name = 'shipment.test.grandtotal'
     _description = 'Test Grand Total Shipment'
-    _rec_name = 'name'
+    _rec_name = 'fragile_id'
     
-    name = fields.Char(string='No. Pengiriman', required=True, copy=False, default='New')
+    # name = fields.Char(string='No. Pengiriman', required=True, copy=False, default='New')
 
     fragile_id = fields.Many2one('shipment.fragile', string="Fragile Shipment")
     priority_id = fields.Many2one('shipment.priority', string="Priority Shipment")

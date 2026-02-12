@@ -15,11 +15,11 @@
                 </header>
                 <sheet>
                     <div class="text-center mb-4">
-                        <h2>Simulasi Perhitungan JSON Nested</h2>
+                        <h2>Simulasi Perhitungan</h2>
                     </div>
                     
                     <group>
-                        <group string="Input Data (JSON Structure)">
+                        <group string="Input Data">
                             <field name="raw_data_display" 
                                    nolabel="1" 
                                    style="font-family: monospace; font-size: 12px; background-color: #f1f1f1; padding: 10px; border-radius: 5px;"/>
