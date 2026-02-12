@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <data>
+            <!-- Add you code here -->
+            <menuitem id="ds_base_transaksi_menu_root" name="Transaksi" sequence="0" web_icon="ds_base_transaksi,static/description/icon.png"/>
+            <menuitem id="diskon_menu_categ" name="Diskon" parent="ds_base_transaksi_menu_root" sequence="10"/>
+
+        </data>
+
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <data>
+            <record id="modul_transaksi_diskon" model="ir.module.category">
+                <field name="name">Transaksi dan Diskon</field>
+            </record>
+
+            <record id="group_transaksi_user" model="res.groups">
+                <field name="name">Transaksi User</field>
+                <field name="category_id" ref="modul_transaksi_diskon"/>
+            </record>
+
+            <record id="group_transaksi_manager" model="res.groups">
+                <field name="name">Transaksi Manager</field>
+                <field name="category_id" ref="modul_transaksi_diskon"/>
+                <field name="implied_ids" eval="[(4, ref('group_transaksi_user'))]"/>
+            </record>
+
+        </data>
+</odoo>

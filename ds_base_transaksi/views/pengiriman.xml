@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_fragile_list" model="ir.ui.view">
+        <field name="name">shipment.fragile.list</field>
+        <field name="model">shipment.fragile</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="distance_km"/>
+                <field name="insurance_cost"/>
+                <field name="total_cost" decoration-bf="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_fragile_form" model="ir.ui.view">
+        <field name="name">shipment.fragile.form</field>
+        <field name="model">shipment.fragile</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group string="Fragile Shipment (Asuransi 10%)">
+                        <group>
+                            <field name="name"/>
+                            <field name="distance_km"/>
+                            <field name="handling_fee"/>
+                        </group>
+                        <group>
+                            <field name="insurance_cost"/>
+                            <field name="total_cost" decoration-bf="1" widget="monetary"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_priority_list" model="ir.ui.view">
+        <field name="name">shipment.priority.list</field>
+        <field name="model">shipment.priority</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="distance_km"/>
+                <field name="priority_fee"/>
+                <field name="total_cost" decoration-bf="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_priority_form" model="ir.ui.view">
+        <field name="name">shipment.priority.form</field>
+        <field name="model">shipment.priority</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group string="Priority Shipment (+50.000)">
+                        <group>
+                            <field name="name"/>
+                            <field name="distance_km"/>
+                            <field name="handling_fee"/>
+                        </group>
+                        <group>
+                            <field name="priority_fee"/>
+                            <field name="total_cost" decoration-bf="1" widget="monetary"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- test.grandtotal tree view -->
+    <record id="shipment_test_grandtotal_view_list" model="ir.ui.view">
+    <field name="name">shipment.test.grandtotal.list</field>
+    <field name="model">shipment.test.grandtotal</field>
+    <field name="arch" type="xml">
+            <list>
+                <!-- Add your fields here -->
+                <field name="name"/>
+                <field name="fragile_total"/>
+                <field name="priority_total"/>
+                <field name="grand_total"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_test_grandtotal_form" model="ir.ui.view">
+    <field name="name">shipment.test.grandtotal.form</field>
+    <field name="model">shipment.test.grandtotal</field>
+    <field name="arch" type="xml">
+        <form string="Test Grand Total">
+            <sheet>
+                <group>
+                    <group string="Shipment Selection">
+                        <field name="name"/>
+                        <field name="fragile_id"/>
+                        <field name="priority_id"/>
+                    </group>
+
+                    <group string="Result">
+                        <field name="fragile_total" readonly="1"/>
+                        <field name="priority_total" readonly="1"/>
+                        <field name="grand_total" readonly="1"/>
+                    </group>
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+
+    <record id="action_fragile" model="ir.actions.act_window">
+        <field name="name">Fragile Shipments</field>
+        <field name="res_model">shipment.fragile</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_priority" model="ir.actions.act_window">
+        <field name="name">Priority Shipments</field>
+        <field name="res_model">shipment.priority</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_shipment_test_grandtotal" model="ir.actions.act_window">
+        <field name="name">Test Grand Total</field>
+        <field name="res_model">shipment.test.grandtotal</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="fragile_menu_act" name="Fragile Goods" parent="diskon_menu_categ" action="action_fragile" sequence="20"/>
+    <menuitem id="priority_menu_act" name="Priority Shipment" parent="diskon_menu_categ" action="action_priority" sequence="30"/>
+    <menuitem id="test_grandtotal_menu_act" name="Test Grand Total" parent="diskon_menu_categ" action="action_shipment_test_grandtotal" sequence="40"/>
+</odoo>
