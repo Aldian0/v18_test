@@ -56,6 +56,7 @@ class FragileGoodsShipment(StandardShipment):
 
     @api.depends('distance_km')
     def _compute_cost(self):
+        
         for rec in self:
             rec.total_cost = rec.calculate_total_cost()
             rec.insurance_cost = rec.total_cost - (rec.calculate_base_cost() + 20000)
@@ -84,11 +85,13 @@ class PriorityShipment(StandardShipment):
     def calculate_total_cost(self):
         # Override: Panggil method dari parent (StandardShipment)
         return super().calculate_total_cost() + self.priority_fee
+    
 
     @api.depends('distance_km')
     def _compute_cost(self):
         for rec in self:
             rec.total_cost = rec.calculate_total_cost()
+            # rec.insurance_cost = rec.total_cost - (rec.calculate_base_cost() + 20000)
 
 
 # 5. TEST GRAND TOTAL (REAL RECORD VERSION)

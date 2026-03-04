@@ -66,6 +66,9 @@ class LoyaltyAnalysis(models.Model):
             p_val = 5 if tx.amount > 500000 else 0
             if p_val == 5: hv_count += 1
 
+            p_val = 7 if tx.amount > 600000 else 0
+            if p_val == 7: hv_count += 1
+
             p_day = 3 if tx.date and tx.date.weekday() in [5, 6] else 0
             
             # Non-kumulatif: Ambil poin tertinggi

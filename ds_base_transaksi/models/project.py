@@ -33,6 +33,11 @@ class ProjectBudgetWizard(models.TransientModel):
                                 "name": "Alpha-2-A",
                                 "budget": 1000,
                                 "sub_projects": []
+                            },
+                            {
+                                "name": "Alpha-2-B",
+                                "budget": 7000,
+                                "sub_projects": []
                             }
                         ]
                     }
